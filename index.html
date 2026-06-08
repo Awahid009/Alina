@@ -12,15 +12,15 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  width: 100%;
+  height: 100%;
   font-family: "Comic Sans MS", cursive;
-  overflow: hidden;
   background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4);
   background-size: 300% 300%;
   animation: bg 8s ease infinite;
   color: white;
-  width: 100%;
-  height: 100vh;
+  overflow: hidden;
 }
 
 @keyframes bg {
@@ -29,24 +29,35 @@ body {
   100% {background-position: 0% 50%;}
 }
 
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .slide {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  opacity: 0;
-  transition: opacity 1.5s ease;
   padding: 30px;
   top: 0;
   left: 0;
+  z-index: 10;
 }
 
-.active {
-  opacity: 1;
+.slide.active {
+  display: flex;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 h1 {
@@ -59,6 +70,7 @@ p {
   max-width: 700px;
   font-size: 20px;
   line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 .sticker {
@@ -66,6 +78,7 @@ p {
   font-size: 30px;
   pointer-events: none;
   animation: float 6s linear infinite;
+  z-index: 5;
 }
 
 @keyframes float {
@@ -75,13 +88,15 @@ p {
 }
 
 .btn {
-  padding: 12px 30px;
-  margin: 10px;
+  padding: 15px 40px;
+  margin: 15px;
   border-radius: 30px;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  margin-top: 30px;
+  font-family: "Comic Sans MS", cursive;
+  transition: all 0.3s ease;
+  z-index: 100;
 }
 
 .yes {
@@ -90,16 +105,29 @@ p {
   box-shadow: 0 0 20px #ff4d6d;
 }
 
+.yes:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #ff4d6d;
+}
+
 .no {
   background: transparent;
   border: 2px solid white;
   color: white;
   position: fixed;
+  bottom: 50%;
+  left: 50%;
+}
+
+.no:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>
 </head>
 
 <body>
+
+<div class="container">
 
 <div class="slide active">
   <h1>For Alina 💖</h1>
@@ -133,19 +161,27 @@ p {
 
 <div class="slide">
   <h1>💖 One Last Question</h1>
-  <p>Will you be mine for the rest of my life, Alina?</p>
-  <button class="btn yes" onclick="yes()">Yes 💖</button>
-  <button class="btn no" id="noBtn">No 💔</button>
+  <p style="margin-bottom: 40px;">Will you be mine for the rest of my life, Alina?</p>
+  <div>
+    <button class="btn yes" onclick="yes()">Yes 💖</button>
+    <button class="btn no" id="noBtn">No 💔</button>
+  </div>
+</div>
+
 </div>
 
 <script>
 let index = 0;
 const slides = document.querySelectorAll(".slide");
 
-setInterval(() => {
-  slides[index].classList.remove("active");
-  index = (index + 1) % slides.length;
+function showSlide() {
+  slides.forEach(s => s.classList.remove("active"));
   slides[index].classList.add("active");
+}
+
+setInterval(() => {
+  index = (index + 1) % slides.length;
+  showSlide();
 }, 4000);
 
 const emojis = ["💖","🌸","✨","💕","🧸","🎀"];
@@ -174,20 +210,21 @@ noBtn.addEventListener("mouseover", () => {
 function yes() {
   document.body.innerHTML = `
     <div style="
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-direction:column;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       background: linear-gradient(135deg, #ff4d6d, #ffb6c1);
-      color:white;
-      text-align:center;
-      font-family:'Comic Sans MS', cursive;
+      color: white;
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive;
       margin: 0;
       padding: 0;
     ">
-      <h1 style="font-size:3rem;">She said YES 💖</h1>
-      <p style="font-size:20px;">Alina, you made my world magical ✨</p>
+      <h1 style="font-size: 4rem; margin: 0 0 30px 0; text-shadow: 0 0 20px rgba(255,255,255,0.8);">She said YES 💖</h1>
+      <p style="font-size: 24px; margin: 0;">Alina, you made my world magical ✨</p>
     </div>
   `;
 }
