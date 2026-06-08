@@ -5,30 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Alina 💖</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
+            font-family: "Comic Sans MS", cursive;
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%);
             color: white;
             text-align: center;
+            overflow: hidden;
         }
         
-        .content {
-            font-size: 48px;
+        .container {
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: "Comic Sans MS", cursive;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn {
+            background: #ff4d6d;
+            color: white;
+            box-shadow: 0 0 15px #ff4d6d;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ff4d6d;
+        }
+
+        .prev-btn {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .prev-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .yes-btn {
+            background: #ff4d6d;
+            color: white;
+            box-shadow: 0 0 20px #ff4d6d;
+            padding: 15px 40px;
+            font-size: 18px;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 30px #ff4d6d;
+        }
+
+        .no-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+        }
+
+        .no-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .slide-counter {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .emoji-float {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: float 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>For Alina 💖</h1>
-        <p>You are my favorite thought... every single day.</p>
+    <div class="container">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <h1>For Alina 💖</h1>
+            <p>You are my favorite thought… every single day.</p>
+            <div class="button-group">
+                <button class="next-btn" onclick="nextSlide()">Next ➜</button>
+            </div>
+            <div class="slide-counter">1 / 5</div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h1>✨ Your Beauty ✨</h1>
+            <p>Alina, your smile is like soft sunlight on a cold morning.<br>
+            It makes everything feel okay instantly.</p>
+            <div class="button-group">
+                <button class="prev-btn" onclick="prevSlide()">⬅ Back</button>
+                <button class="next-btn" onclick="nextSlide()">Next ➜</button>
+            </div>
+            <div class="slide-counter">2 / 5</div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h1>💞 My Feelings</h1>
+            <p>I don't just like you…<br>
+            I feel peace when I think about you,<br>
+            and happiness when I talk to you.</p>
+            <div class="button-group">
+                <button class="prev-btn" onclick="prevSlide()">⬅ Back</button>
+                <button class="next-btn" onclick="nextSlide()">Next ➜</button>
+            </div>
+            <div class="slide-counter">3 / 5</div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h1>🌸 Special Moments</h1>
+            <p>Every moment with you, even small ones,<br>
+            becomes my favorite memory.</p>
+            <div class="button-group">
+                <button class="prev-btn" onclick="prevSlide()">⬅ Back</button>
+                <button class="next-btn" onclick="nextSlide()">Next ➜</button>
+            </div>
+            <div class="slide-counter">4 / 5</div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>💖 One Last Question</h1>
+            <p>Will you be mine for the rest of my life, Alina?</p>
+            <div class="button-group">
+                <button class="yes-btn" onclick="yes()">Yes 💖</button>
+                <button class="no-btn" id="noBtn">No 💔</button>
+            </div>
+            <div class="button-group">
+                <button class="prev-btn" onclick="prevSlide()">⬅ Back</button>
+            </div>
+            <div class="slide-counter">5 / 5</div>
+        </div>
     </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide");
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove("active"));
+            slides[n].classList.add("active");
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Floating emojis
+        const emojis = ["💖", "🌸", "✨", "💕", "🧸", "🎀"];
+        
+        function createSticker() {
+            const emoji = document.createElement("div");
+            emoji.className = "emoji-float";
+            emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * window.innerWidth + "px";
+            emoji.style.fontSize = (20 + Math.random() * 25) + "px";
+            emoji.style.animationDuration = (4 + Math.random() * 4) + "s";
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => emoji.remove(), 6000);
+        }
+
+        setInterval(createSticker, 500);
+
+        // Moving no button
+        const noBtn = document.getElementById("noBtn");
+        noBtn.addEventListener("mouseover", () => {
+            noBtn.style.position = "fixed";
+            noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+            noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
+        });
+
+        // Yes button click
+        function yes() {
+            document.body.innerHTML = `
+                <div style="
+                    width: 100%;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    background: linear-gradient(135deg, #ff4d6d, #ffb6c1);
+                    color: white;
+                    text-align: center;
+                    font-family: 'Comic Sans MS', cursive;
+                    margin: 0;
+                    padding: 0;
+                ">
+                    <h1 style="font-size: 4rem; margin: 0 0 30px 0; text-shadow: 0 0 20px rgba(255,255,255,0.8);">She said YES 💖</h1>
+                    <p style="font-size: 24px; margin: 0;">Alina, you made my world magical ✨</p>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
